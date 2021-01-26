@@ -1,0 +1,49 @@
+<h1>Profile Page</h1>
+
+<h3>Welcome {{{nickname}}}!</h3>
+
+<div>
+    <h5>
+        On this page, you'll be able to port your data from one device to another using TOTP. Here are the steps:
+        <ol>
+            <li>Open your app on your new device and provide the username you're using.</li>
+            <li>Generate the TOTP from this page and enter it in your device. Sign In.</li>
+            <li>If the TOTP got expired, you can generate again.</li>
+            <li>Once verified, all your data will be ported to that device. You may no longer be able to use your previous device.</li>
+        </ol>
+    </h5>
+</div>
+
+<style type="text/css">
+    #totp:focus
+    {
+        outline:none !important;
+    }
+</style>
+
+<div id="generateTOTP">
+    <form id="generateTOTPForm" action="/profilePage/formSubmit" method="post">
+        <p>
+            <input type="submit" value="Generate TOTP" />
+            <input type="hidden" value={{{nickname}}} name="nickname" />
+            <input type="hidden" value={{{uniqueId}}} name="uniqueId" />
+        </p>
+    </form>
+</div>
+
+<div id="ShowTOTP">
+    This is your TOTP: <input id="totp" value="{{{totp}}}" style="border: 0;" readonly/><br />
+    TOTP expired? <input type="submit" form="generateTOTPForm" value="Generate again" />
+</div>
+
+<script>
+    $(function(){
+        var totp = document.getElementById("totp");
+        if(totp && totp.value){
+            $("#generateTOTP").hide();
+        }
+        else{
+            $("#ShowTOTP").hide();
+        }
+    });
+</script>
