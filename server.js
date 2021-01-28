@@ -38,7 +38,7 @@ app.use('/exercise', exercisesInteraction);
 app.use('/journal', journalInteraction);
 app.use('/therapist', therapistsInteraction);
 app.use('/code', DataPorting);
-app.use('/signup', SignUp);
+app.use('/', SignUp);
 app.use('/signin', SignIn);
 app.use('/profilePage', ProfilePage);
 
