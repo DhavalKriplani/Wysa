@@ -5,7 +5,7 @@ const path = require('path');
 const EHB = require('express-handlebars');
 const connectDB = require('./Connection');
 const app = express();
-const Port = 3000;
+const Port = process.env.PORT || 3000;
 
 // Handler Imports
 const accountsInteraction = require('./handlers/AccountsInteraction');
@@ -30,7 +30,6 @@ app.engine("hbs", EHB({
     layoutsDir: __dirname + "/Views/layouts"
 }));
 app.set("view engine", "hbs");
-app.listen(Port, ()=>console.log("Server started"));
 
 // Add Paths
 app.use('/user', accountsInteraction);
@@ -42,3 +41,6 @@ app.use('/code', DataPorting);
 app.use('/signup', SignUp);
 app.use('/signin', SignIn);
 app.use('/profilePage', ProfilePage);
+
+app.listen(Port, ()=>console.log("Server started"));
+module.exports = app;
