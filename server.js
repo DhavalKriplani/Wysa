@@ -23,7 +23,7 @@ connectDB();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.set('views', path.join(__dirname, "/Views/"));
+app.set('views', path.join(__dirname, "/views/"));
 app.engine("hbs", EHB({
     extname: "hbs",
     defaultLayout: "mainlayout",
