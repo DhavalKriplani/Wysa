@@ -2,9 +2,18 @@ const totp = require('totp-generator');
 const jwt = require('jsonwebtoken');
 const credentials = require('../Credentials');
 
-exports.generateTOTP = (uniqueId) => {
+const generateTOTP = (uniqueId, retries = 5) => {
     uniqueId = uniqueId.replace(/-/g,'');
-    return totp(uniqueId, {digits: 8, period: 60});
+    console.log(retries);
+    try {
+        return totp(uniqueId, {digits: 8, period: 60});
+    } catch (err) {
+        if(retries <= 0)
+            return err;
+        uniqueId += uniqueId;
+        return generateTOTP(uniqueId, --retries)
+    }
+
 };
 
 exports.createAccessToken = (data) => {
@@ -19,3 +28,5 @@ exports.verifyAccessToken = (token) => {
         return null;
     }
 };
+
+exports.generateTOTP = generateTOTP;
