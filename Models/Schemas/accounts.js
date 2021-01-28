@@ -14,7 +14,7 @@ const accounts = mongoose.Schema({
         type:Object
     },
     totp:{
-        type:Number
+        type:String
     }
 });
 
