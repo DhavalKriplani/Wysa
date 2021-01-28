@@ -24,7 +24,7 @@ router.get('/', async (req, res)=>{
     }
 
     if(!authorized){
-        res.redirect("/signup")
+        res.redirect("/")
     }
 
     const params = req.query;
@@ -79,7 +79,7 @@ router.post('/formSubmit', async (req, res)=>{
     }
 
     if(!authorized){
-        res.redirect("/signup")
+        res.redirect("/")
     }
 
     const body = req.body;
