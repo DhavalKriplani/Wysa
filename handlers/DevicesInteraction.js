@@ -19,7 +19,7 @@ router.post('/', async(req, res) => {
 });
 
 router.get('/', async (req, res)=>{
-    const params = req.params;
+    const params = req.query;
     console.log(params);
     const response = await DevicesInteraction.getAllDevices(params);
     if(validators.isNonNullObject(response) && "status" in response){

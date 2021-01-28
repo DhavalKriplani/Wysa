@@ -16,6 +16,7 @@ const therapistsInteraction = require('./handlers/TherapistsInteraction');
 const DataPorting = require('./handlers/DataPorting');
 const SignUp = require('./handlers/SignUp');
 const SignIn = require('./handlers/SignIn');
+const verifyCode = require('./handlers/verifyCode');
 const ProfilePage = require('./handlers/ProfilePage');
 
 // Initial Setup
@@ -40,6 +41,7 @@ app.use('/therapist', therapistsInteraction);
 app.use('/code', DataPorting);
 app.use('/', SignUp);
 app.use('/signin', SignIn);
+app.use('/verifyCode', verifyCode);
 app.use('/profilePage', ProfilePage);
 
 app.listen(Port, ()=>console.log("Server started"));

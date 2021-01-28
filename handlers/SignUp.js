@@ -24,7 +24,7 @@ router.get('/', async (req, res)=>{
         }
     }
 
-    const params = req.params;
+    const params = req.query;
     console.log(params);
     const response = await SignUp.loadTemplate(params);
     if(validators.isNonNullObject(response) && "render" in response){

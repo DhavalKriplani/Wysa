@@ -1,0 +1,40 @@
+<h1>Verify Code</h1>
+
+<div id="CodeVerification">
+    <form action="/verifyCode" method="post">
+        <p>
+            <label>Username:</label><input value="" name="username"/><br />
+            <label>TOTP<sup>*</sup>:</label><input value="" name="totp" type="tel"/><br />
+            <sup>*</sup><small>TOTP will be available in your app, if you're already logged in in the app.</small><br /><br />
+            <button type="submit">Verify Code</button>
+        </p>
+    </form>
+</div>
+
+<div id="Username">
+    Well, hello there {{{nickname}}}! Nice to Meet you!
+    <input id="nickname" value="{{{nickname}}}" style="border: 0;" hidden="false"/>
+</div>
+
+<div id="Message">
+    Message: <input id="totp" value="{{{message}}}" style="border: 0;" readonly/><br />
+</div>
+
+<script>
+    $(function(){
+        var nickname = document.getElementById("nickname");
+        var msg = document.getElementById("msg");
+        if(nickname && nickname.value){
+            $("#CodeVerification").hide();
+            $("#Message").hide();
+        }
+        else if(msg && msg.value){
+            $("#CodeVerification").hide();
+            $("#Username").hide();
+        }
+        else{
+            $("#Username").hide();
+            $("#Message").hide();
+        }
+    });
+</script>

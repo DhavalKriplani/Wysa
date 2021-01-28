@@ -21,7 +21,7 @@ const formSubmit = async (params) => {
 
     if(!areParametersValid(params)) return errorHandling.INVALID_PARAMS;
 
-    const userDetails = await accounts.addUserDetails(params.nickname);
+    const userDetails = await accounts.addUserDetails(params.username);
     const journalDetails = await journal.addJournalDetails(userDetails.uniqueId);
     console.log(journalDetails);
     const accessToken = utils.createAccessToken({"un": params.username, "id": userDetails.uniqueId});

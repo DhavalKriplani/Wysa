@@ -1,36 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const SignIn = require('../Controllers/SignIn');
+const verifyCode = require('../Controllers/verifyCode');
 const utils = require('../helpers/utils');
 const validators = require('../helpers/validators');
 
 router.get('/', async (req, res)=>{
-    let cookies = req.cookies;
-    console.log(cookies);
-
-    if(cookies && "token" in cookies){
-        let token = cookies.token;
-        console.log(token);
-        if(token != null){
-            try{
-                const tokenVerification = utils.verifyAccessToken(token);
-                if(tokenVerification){
-                    console.log(tokenVerification);
-                    res.redirect("/profilePage?nickname=" + tokenVerification.un + "&uniqueId=" + tokenVerification.id)
-                }
-            } catch(err) {
-                console.log("An err occurred: ", err)
-            }
-        }
-    }
-
     const params = req.query;
     console.log(params);
-    const response = await SignIn.loadTemplate(params);
+    const response = await verifyCode.loadTemplate(params);
     if(validators.isNonNullObject(response) && "render" in response){
         let templateParams = {};
         if("params" in response)
             templateParams = response.params;
+        console.log(templateParams);
         res.render(response.render, templateParams)
     }
     else if(validators.isNonNullObject(response) && "redirect" in response){
@@ -50,12 +32,7 @@ router.get('/', async (req, res)=>{
 router.post('/', async (req, res)=>{
     const body = req.body;
     console.log(body);
-    const response = await SignIn.formSubmit(body);
-
-    if("cookie" in response){
-        res.cookie("token", response.cookie);
-        console.log("Cookie set!");
-    }
+    const response = await verifyCode.formSubmit(body);
 
     if(validators.isNonNullObject(response) && "render" in response){
         let templateParams = {};
