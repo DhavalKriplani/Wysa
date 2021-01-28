@@ -38,7 +38,7 @@ const formSubmit = async (params) => {
             return {"redirect": "/verifyCode", "params": {"nickname": params.username, "uniqueId": uniqueId}, "cookie": accessToken}
         }
         else {
-            return {"message": "TOTP Expired!"};
+            return {"redirect": "/verifyCode", "params": {"message": "TOTP Expired!"}}
         }
     }
 };

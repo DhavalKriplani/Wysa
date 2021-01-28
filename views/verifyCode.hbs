@@ -15,10 +15,16 @@
     Well, hello there {{{nickname}}}! Nice to Meet you! <br/><br/>
     (The APIs will be called from here to get the user data and whatever processing is required)
     <input id="nickname" value="{{{nickname}}}" style="border: 0;" hidden="false"/>
+    <form action="/verifyCode" method="get">
+        <button type="submit">Verify again</button>
+    </form>
 </div>
 
 <div id="Message">
-    Message: <input id="totp" value="{{{message}}}" style="border: 0;" readonly/><br />
+    Message: <input id="msg" value="{{{message}}}" style="border: 0;" readonly/><br /><br />
+    <form action="/verifyCode" method="get">
+        <button type="submit">Verify again</button>
+    </form>
 </div>
 
 <script>
