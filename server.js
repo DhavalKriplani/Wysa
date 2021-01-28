@@ -27,7 +27,7 @@ app.set('views', path.join(__dirname, "/Views/"));
 app.engine("hbs", EHB({
     extname: "hbs",
     defaultLayout: "mainlayout",
-    layoutsDir: __dirname + "/Views/layouts"
+    layoutsDir: __dirname + "/views/layouts"
 }));
 app.set("view engine", "hbs");
 
