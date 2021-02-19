@@ -15,6 +15,12 @@ const accounts = mongoose.Schema({
     },
     totp:{
         type:String
+    },
+    dataPorted:{
+        type:Boolean
+    },
+    dataPortedTo:{
+        type:String
     }
 });
 

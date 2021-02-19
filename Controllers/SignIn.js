@@ -29,13 +29,19 @@ const formSubmit = async (params) => {
     else {
         const uniqueId = userDetails.uniqueId;
         const totp = userDetails.totp;
+        const isUserPorted = userDetails.dataPorted;
 
         const currentTOTP = utils.generateTOTP(uniqueId);
         console.log(currentTOTP);
         if(currentTOTP === totp.toString()){
             const accessToken = utils.createAccessToken({"un": params.username, "id": uniqueId});
             console.log(accessToken);
-            return {"redirect": "/profilePage", "params": {"nickname": params.username, "uniqueId": uniqueId}, "cookie": accessToken}
+            let templateParams = {
+                "nickname": params.username,
+                "uniqueId": uniqueId,
+                "userPorted": isUserPorted
+            };
+            return {"redirect": "/profilePage", "params": templateParams, "cookie": accessToken}
         }
         else {
             return {"message": "TOTP Expired!"};

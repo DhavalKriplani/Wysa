@@ -2,49 +2,42 @@
 
 <h3>Welcome {{{nickname}}}!</h3>
 
-<div>
-    <h5>
-        On this page, you'll be able to port your data from one device to another using TOTP. Here are the steps:
-        <ol>
-            <li>Open your app on your new device and provide the username you're using.</li>
-            <li>Generate the TOTP from this page and enter it in your device. Sign In.</li>
-            <li>If the TOTP got expired, you can generate again.</li>
-            <li>Once verified, all your data will be ported to that device. You may no longer be able to use your previous device.</li>
-        </ol>
-    </h5>
+<input id="userPorted" value="{{{userPorted}}}" style="border: 0;" hidden="false"/>
+<div id="divUserPorted">
+    <h5>Your data has been ported to another account by you. Please use that account for accessing your data.</h5>
 </div>
 
-<style type="text/css">
-    #totp:focus
-    {
-        outline:none !important;
-    }
-</style>
 
-<div id="generateTOTP">
-    <form id="generateTOTPForm" action="/profilePage/formSubmit" method="post">
+<div id="divNormal">
+    <h5>
+        On this page, you'll be able to port your data from one account to another using TOTP. Here are the steps:
+        <ol>
+            <li>Open your app on your device generate a TOTP.</li>
+            <li>Provide the TOTP here.</li>
+            <li>If the TOTP got expired, you can generate again.</li>
+            <li>Once verified, all your data will be ported to this account. You may no longer be able to use your previous account.</li>
+        </ol>
+    </h5>
+
+    <form action="/verifyCode" method="post">
         <p>
-            <input type="submit" value="Generate TOTP" />
-            <input type="hidden" value={{{nickname}}} name="nickname" />
-            <input type="hidden" value={{{uniqueId}}} name="uniqueId" />
+            <label>Username:</label><input value="" name="oldUsername"/><br />
+            <input value="{{{uniqueId}}}" name="uniqueId" hidden="false"/><br />
+            <input value="{{{nickname}}}" name="username" hidden="false"/><br />
+            <label>TOTP<sup>*</sup>:</label><input value="" name="totp" type="tel"/><br /><br />
+            <button type="submit">Verify Code</button>
         </p>
     </form>
 </div>
 
-<div id="ShowTOTP">
-    This is your TOTP: <input id="totp" value="{{{totp}}}" style="border: 0;" readonly/><br />
-    TOTP expired? <input type="submit" form="generateTOTPForm" value="Generate again" /><br/><br/>
-    <a href="/verifyCode" target="_blank" rel="noopener noreferrer">Verify in the device from here</a>
-</div>
-
 <script>
     $(function(){
-        var totp = document.getElementById("totp");
-        if(totp && totp.value){
-            $("#generateTOTP").hide();
+        var userPorted = document.getElementById("userPorted");
+        if(userPorted && userPorted.value){
+            $("#divNormal").hide();
         }
         else{
-            $("#ShowTOTP").hide();
+            $("#divUserPorted").hide();
         }
     });
 </script>

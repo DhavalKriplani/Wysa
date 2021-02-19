@@ -10,6 +10,8 @@ const addUserDetails = async (nickname) => {
     user.userSettings = {};
     user.userSettings.notifications = true;
     user.userSettings.referralCode = "RBB9M";
+    user.dataPorted = false;
+    user.dataPortedTo = "";
     let account = new Accounts(user);
     try {
         await account.save();
@@ -51,8 +53,17 @@ const getTOTP = async (nickname, totp) => {
     }
 };
 
+const portData = async (oldId, newId) => {
+    try{
+        return await Accounts.updateOne({uniqueId: oldId}, {$set: {dataPorted: true, dataPortedTo: newId}})
+    } catch (err){
+        return {"message": err}
+    }
+};
+
 exports.addUserDetails = addUserDetails;
 exports.getAllUsers = getAllUsers;
 exports.getUserDetails = getUserDetails;
 exports.updateTOTP = updateTOTP;
 exports.getTOTP = getTOTP;
+exports.portData = portData;

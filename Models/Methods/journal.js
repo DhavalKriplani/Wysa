@@ -1,3 +1,4 @@
+const utils = require('../../helpers/utils');
 const Journal = require('../Schemas/journal');
 
 const addJournalDetails = async (userId) => {
@@ -42,7 +43,29 @@ const updateJournalDetails = async (userId, userData) => {
     }
 };
 
+const portData = async (oldId, newId) => {
+    try{
+        let oldJournal = await Journal.findOne({userId: oldId});
+        let newJournal = await Journal.findOne({userId: newId});
+        let userData = {...oldJournal.userData, ...newJournal.userData};
+        let orderedUserData = utils.sortObject(userData);
+        let keyToBePopped = null;
+        for (const [key, value] of Object.entries(orderedUserData)) {
+            console.log(key, value);
+            if(value.event === "Started my Wysa journey"){
+                keyToBePopped = key
+            }
+        }
+        delete orderedUserData[keyToBePopped];
+        await Journal.updateOne({userId: oldId}, {$set: {userData: {}}});
+        return await Journal.updateOne({userId: newId}, {$set: {userData: orderedUserData}})
+    }  catch (err) {
+        return {"message": err}
+    }
+};
+
 exports.addJournalDetails = addJournalDetails;
 exports.getAllJournals = getAllJournals;
 exports.getUserJournalDetails = getUserJournalDetails;
 exports.updateJournalDetails = updateJournalDetails;
+exports.portData = portData;

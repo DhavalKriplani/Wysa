@@ -29,4 +29,18 @@ exports.verifyAccessToken = (token) => {
     }
 };
 
+exports.sortObject = (object) => {
+    console.log(JSON.stringify(object));
+
+    const ordered = Object.keys(object).sort().reduce(
+        (obj, key) => {
+            obj[key] = object[key];
+            return obj;
+        },
+        {}
+    );
+    console.log(JSON.stringify(ordered));
+    return ordered
+};
+
 exports.generateTOTP = generateTOTP;
